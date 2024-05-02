@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: Task Management LLM Response
+  version: 1.0.0
+
+paths:
+  /response:
+    post:
+      summary: Process LLM response
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LLMResponse"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FormattedResponse"
+
+components:
+  schemas:
+    LLMResponse:
+      type: object
+      properties:
+        chunks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Chunk"
+
+    Chunk:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [message, code, confirmation, console, image]
+        role:
+          type: string
+        start:
+          type: boolean
+        end:
+          type: boolean
+        content:
+          $ref: "#/components/schemas/ChunkContent"
+
+    ChunkContent:
+      type: object
+      properties:
+        text:
+          type: string
+        code:
+          type: string
+        format:
+          type: string
+          enum: [active_line, output, base64.png]
+        base64:
+          type: string
+
+    FormattedResponse:
+      type: object
+      properties:
+        response:
+          type: string
+        type:
+          type: string
+        role:
+          type: string
+        start:
+          type: boolean
+        end:
+          type: boolean

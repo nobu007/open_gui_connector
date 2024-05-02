@@ -1,0 +1,9 @@
+generatorName: python
+library: pydantic
+outputDir: output
+packageName: open_gui_connector
+typeMappings:
+  array: List
+  object: Dict
+  model: pydantic.BaseModel
+
